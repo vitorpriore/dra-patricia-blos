@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dra. Patrícia Blos · Odontopediatria, Laserterapia e Frenectomia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+<style>
+:root{
+--brand:oklch(78% 0.13 195);
+--brand-deep:oklch(46% 0.09 200);
+--brand-deepest:oklch(34% 0.06 205);
+--ink:oklch(28% 0.025 210);
+--ink-soft:oklch(44% 0.02 210);
+--cream:oklch(98.2% 0.012 190);
+--cream-2:oklch(96% 0.018 188);
+--gold:oklch(78% 0.07 85);
+--line:oklch(86% 0.02 200);
+--white-tint:oklch(99.5% 0.006 190);
+--maxw:1200px;
+--pad:clamp(20px,5vw,80px);
+--r:18px;
+--r-lg:26px;
+--sh-1:0 1px 2px oklch(40% 0.04 205/.06),0 8px 24px oklch(40% 0.04 205/.07);
+--sh-2:0 2px 6px oklch(40% 0.04 205/.08),0 20px 50px oklch(40% 0.04 205/.10);
+--eq:cubic-bezier(.22,1,.36,1);
+--ee:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+font-family:'Hanken Grotesk',sans-serif;
+background:var(--cream);
+color:var(--ink);
+line-height:1.65;
+font-size:17px;
+overflow-x:hidden;
+-webkit-font-smoothing:antialiased;
+}
+body::before{
+content:"";position:fixed;inset:0;z-index:9999;pointer-events:none;opacity:.035;
+background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+h1,h2,h3,h4{font-family:'Fraunces',serif;font-weight:600;line-height:1.08;letter-spacing:-.02em}
+em.it{font-style:italic;font-weight:500}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:var(--maxw);margin:0 auto;padding-left:var(--pad);padding-right:var(--pad)}
+.sec{padding:clamp(64px,9vw,130px) 0}
+.label{font-family:'Hanken Grotesk',sans-serif;font-size:.72rem;font-weight:600;letter-spacing:.28em;text-transform:uppercase;color:var(--brand-deep)}
+.lead{font-size:clamp(1.05rem,1.6vw,1.2rem);color:var(--ink-soft);max-width:60ch}
+.btn{display:inline-flex;align-items:center;gap:.6em;font-weight:600;font-size:1rem;padding:1em 1.7em;border-radius:100px;cursor:pointer;border:none;transition:transform .2s var(--eq),box-shadow .2s var(--eq),background .2s;min-height:44px}
+.btn-primary{background:var(--brand-deep);color:var(--white-tint);box-shadow:var(--sh-1)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:var(--sh-2)}
+.btn-ghost{border:1px solid var(--line);color:var(--ink)}
+.btn-ghost:hover{border-color:var(--brand-deep);color:var(--brand-deep)}
+.btn:focus-visible{outline:2px solid var(--brand-deep);outline-offset:3px}
+svg{display:block}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;backdrop-filter:blur(12px);background:oklch(98.2% 0.012 190/.78);border-bottom:1px solid transparent;transition:border-color .3s,background .3s}
+.nav.scrolled{border-color:var(--line)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:72px}
+.nav-logo{display:flex;align-items:center;gap:.7em;font-family:'Fraunces',serif;font-size:1.18rem;font-weight:600;letter-spacing:-.01em}
+.nav-logo img{height:34px;width:auto}
+.nav-links{display:flex;align-items:center;gap:2rem}
+.nav-links a{font-size:.9rem;font-weight:500;color:var(--ink-soft);transition:color .2s}
+.nav-links a:hover{color:var(--brand-deep)}
+.nav-cta{padding:.7em 1.3em;font-size:.88rem}
+.burger{display:none;background:none;border:none;cursor:pointer;padding:8px;flex-direction:column;gap:5px}
+.burger span{width:24px;height:2px;background:var(--ink);border-radius:2px;transition:.3s}
+.mobile-menu{display:none}
+
+/* HERO */
+.hero{position:relative;padding-top:130px;overflow:hidden}
+.hero-mono{position:absolute;top:8%;right:-4%;font-family:'Fraunces',serif;font-weight:600;font-size:min(46vw,640px);line-height:.8;color:var(--brand);opacity:.07;pointer-events:none;z-index:0;font-style:italic}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(30px,5vw,68px);align-items:center;position:relative;z-index:1}
+.hero-tag{display:inline-flex;align-items:center;gap:.7em;margin-bottom:1.6rem}
+.hero-tag::before{content:"";width:34px;height:1px;background:var(--brand-deep)}
+.hero h1{font-size:clamp(2.6rem,6.4vw,5rem);margin-bottom:1.4rem}
+.hero h1 .it{color:var(--brand-deep)}
+.hero p.lead{margin-bottom:2.2rem}
+.hero-cta{display:flex;gap:1rem;flex-wrap:wrap}
+.hero-fig{position:relative;border-radius:300px 300px var(--r-lg) var(--r-lg);overflow:hidden;aspect-ratio:4/5;box-shadow:var(--sh-2)}
+.hero-fig img{width:100%;height:100%;object-fit:cover}
+.hero-fig::after{content:"";position:absolute;inset:0;background:linear-gradient(160deg,transparent 50%,oklch(46% 0.09 200/.22))}
+.hero-seal{position:absolute;bottom:-26px;left:-26px;z-index:2}
+
+/* SEAL */
+.seal{width:118px;height:118px}
+.seal text{font-family:'Fraunces',serif}
+
+/* CRED */
+.cred{background:var(--brand-deepest);color:var(--white-tint)}
+.cred-in{display:grid;grid-template-columns:repeat(3,1fr);gap:0;text-align:center}
+.cred-item{padding:clamp(28px,4vw,46px) clamp(12px,2vw,30px);position:relative}
+.cred-item:not(:last-child)::after{content:"";position:absolute;right:0;top:22%;bottom:22%;width:1px;background:oklch(80% 0.06 195/.25)}
+.cred-item .num{font-family:'Fraunces',serif;font-size:clamp(2.4rem,5vw,3.6rem);line-height:1;color:var(--brand);font-weight:600}
+.cred-item .cap{font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;color:oklch(85% 0.04 195/.85);margin-top:.7rem}
+
+/* SOBRE */
+.about-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:clamp(34px,6vw,80px);align-items:center}
+.about-fig{position:relative;border-radius:260px 260px var(--r) var(--r);overflow:hidden;aspect-ratio:3/4;box-shadow:var(--sh-2)}
+.about-fig img{width:100%;height:100%;object-fit:cover}
+.about-num{position:absolute;top:18px;right:22px;font-family:'Fraunces',serif;font-style:italic;font-size:1.4rem;color:oklch(100% 0 0/.9);z-index:2}
+.about h2,.sec-head h2{font-size:clamp(2rem,4.4vw,3.2rem)}
+.about h2{margin:1rem 0 1.5rem}
+.about p{margin-bottom:1.1rem;color:var(--ink-soft)}
+.about .sig{font-family:'Fraunces',serif;font-style:italic;font-size:1.5rem;color:var(--brand-deep);margin-top:.5rem}
+
+.sec-head{max-width:640px;margin-bottom:clamp(40px,5vw,60px)}
+.sec-head .label{display:block;margin-bottom:1rem}
+.sec-head h2{margin-bottom:1rem}
+
+/* SERVICOS */
+.serv-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:clamp(22px,3vw,32px)}
+.card{background:var(--white-tint);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--sh-1);transition:transform .3s var(--eq),box-shadow .3s var(--eq)}
+.card:hover{transform:translateY(-5px);box-shadow:var(--sh-2)}
+.card-img{aspect-ratio:5/4;overflow:hidden}
+.card-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s var(--eq)}
+.card:hover .card-img img{transform:scale(1.05)}
+.card-body{padding:clamp(26px,3vw,34px)}
+.card-body .n{font-family:'Fraunces',serif;font-style:italic;color:var(--brand-deep);font-size:1.1rem}
+.card-body h3{font-size:1.5rem;margin:.4rem 0 .8rem}
+.card-body p{color:var(--ink-soft);font-size:.98rem}
+
+/* COMO FUNCIONA */
+.steps{background:var(--cream-2)}
+.steps-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:clamp(28px,4vw,48px);margin-top:clamp(36px,4vw,50px)}
+.step{position:relative}
+.step .sn{font-family:'Fraunces',serif;font-size:2.6rem;color:var(--brand);line-height:1;font-weight:600}
+.step h3{font-size:1.35rem;margin:.7rem 0 .6rem}
+.step p{color:var(--ink-soft);font-size:.96rem}
+.step::before{content:"";display:block;width:38px;height:1px;background:var(--brand-deep);margin-bottom:1.1rem}
+
+/* DIFERENCIAIS */
+.diff-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(34px,5vw,70px);align-items:center}
+.diff-fig{border-radius:var(--r-lg);overflow:hidden;aspect-ratio:4/3;box-shadow:var(--sh-2)}
+.diff-fig img{width:100%;height:100%;object-fit:cover}
+.diff-list{list-style:none}
+.diff-list li{padding:1.3rem 0;border-bottom:1px solid var(--line);display:flex;gap:1.2rem;align-items:flex-start}
+.diff-list li:last-child{border-bottom:none}
+.diff-list .dn{font-family:'Fraunces',serif;font-style:italic;color:var(--brand-deep);font-size:1.2rem;flex:none}
+.diff-list h3{font-size:1.2rem;margin-bottom:.25rem}
+.diff-list p{color:var(--ink-soft);font-size:.95rem}
+
+/* GALERIA */
+.gal-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:200px;gap:14px}
+.gal-item{overflow:hidden;border-radius:var(--r);position:relative;box-shadow:var(--sh-1)}
+.gal-item img{width:100%;height:100%;object-fit:cover;transition:transform .55s var(--eq)}
+.gal-item::after{content:"";position:absolute;inset:0;background:oklch(46% 0.09 200/0);transition:background .4s}
+.gal-item:hover img{transform:scale(1.04)}
+.gal-item:hover::after{background:oklch(46% 0.09 200/.12)}
+.gal-item.big{grid-column:span 2;grid-row:span 2}
+
+/* DEPOIMENTOS */
+.testi{background:var(--brand-deepest);color:var(--white-tint);position:relative;overflow:hidden}
+.testi .label{color:var(--brand)}
+.testi-mono{position:absolute;bottom:-12%;left:-3%;font-family:'Fraunces',serif;font-style:italic;font-size:min(40vw,520px);color:oklch(80% 0.06 195);opacity:.05;line-height:.8;pointer-events:none}
+.testi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:clamp(22px,3vw,30px);position:relative;z-index:1}
+.tcard{background:oklch(40% 0.05 205/.4);border:1px solid oklch(80% 0.06 195/.18);border-radius:var(--r-lg);padding:clamp(28px,3vw,38px)}
+.tcard .q{font-family:'Fraunces',serif;font-style:italic;font-size:3rem;line-height:.5;color:var(--brand);display:block;height:.5em}
+.tcard p{font-size:1.05rem;color:oklch(94% 0.02 195);margin:1rem 0 1.4rem}
+.tcard .who{font-weight:600}
+.tcard .ctx{font-size:.85rem;color:oklch(82% 0.04 195/.8)}
+
+/* FAQ */
+.faq-wrap{max-width:800px;margin:0 auto}
+.faq-item{border-bottom:1px solid var(--line)}
+.faq-q{width:100%;text-align:left;background:none;border:none;cursor:pointer;padding:1.5rem 0;display:flex;justify-content:space-between;align-items:center;gap:1.5rem;font-family:'Fraunces',serif;font-size:clamp(1.1rem,2vw,1.35rem);color:var(--ink);font-weight:500}
+.faq-q .ic{flex:none;width:24px;height:24px;transition:transform .3s var(--eq);color:var(--brand-deep)}
+.faq-item.open .ic{transform:rotate(45deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .4s var(--eq)}
+.faq-a p{color:var(--ink-soft);padding-bottom:1.5rem;max-width:65ch}
+
+/* CTA */
+.ctab{background:var(--brand-deep);color:var(--white-tint);text-align:center}
+.ctab h2{font-size:clamp(2.1rem,5vw,3.6rem);margin-bottom:1rem}
+.ctab h2 .it{color:var(--brand)}
+.ctab p{color:oklch(92% 0.03 195);max-width:48ch;margin:0 auto 2.2rem}
+.ctab .btn-primary{background:var(--white-tint);color:var(--brand-deepest)}
+
+/* CONTATO + FOOTER */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(34px,5vw,60px);align-items:start}
+.contact-info .row{display:flex;gap:1rem;padding:1.1rem 0;border-bottom:1px solid var(--line);align-items:flex-start}
+.contact-info .row:last-child{border-bottom:none}
+.contact-info .ic{flex:none;width:22px;height:22px;color:var(--brand-deep);margin-top:3px}
+.contact-info .k{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--brand-deep);font-weight:600}
+.contact-info .v{font-size:1.05rem}
+.map-frame{border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--sh-1);min-height:340px}
+.map-frame iframe{width:100%;height:100%;min-height:340px;border:0;display:block}
+
+footer{background:var(--brand-deepest);color:oklch(88% 0.03 195);padding-top:clamp(56px,7vw,90px)}
+.foot-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:clamp(30px,4vw,56px);padding-bottom:clamp(40px,5vw,60px)}
+.foot-brand{font-family:'Fraunces',serif;font-size:1.5rem;color:var(--white-tint);margin-bottom:1rem}
+.foot-brand span{font-style:italic;color:var(--brand)}
+.foot-grid p,.foot-grid a{font-size:.95rem;color:oklch(82% 0.03 195/.85)}
+.foot-col h4{font-family:'Hanken Grotesk',sans-serif;font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:var(--brand);margin-bottom:1.2rem;font-weight:600}
+.foot-col a{display:block;padding:.4rem 0;transition:color .2s}
+.foot-col a:hover{color:var(--white-tint)}
+.foot-bar{border-top:1px solid oklch(80% 0.06 195/.15);padding:1.6rem 0;display:flex;justify-content:space-between;align-items:center;gap:1rem;font-size:.82rem;flex-wrap:wrap}
+
+.reveal{opacity:1}
+
+@media(max-width:880px){
+.hero-grid,.about-grid,.diff-grid,.contact-grid{grid-template-columns:1fr}
+.foot-grid{grid-template-columns:1fr 1fr}
+.gal-grid{grid-template-columns:repeat(2,1fr);grid-auto-rows:160px}
+.gal-item.big{grid-column:span 2;grid-row:span 2}
+}
+@media(max-width:600px){
+.nav-links{display:none}
+.burger{display:flex}
+.mobile-menu{display:none;position:fixed;inset:72px 0 auto 0;z-index:99;background:var(--cream);border-bottom:1px solid var(--line);flex-direction:column;padding:1rem var(--pad)}
+.mobile-menu.show{display:flex}
+.mobile-menu a{padding:.9rem 0;border-bottom:1px solid var(--line);font-weight:500}
+.cred-in{grid-template-columns:1fr}
+.cred-item:not(:last-child)::after{display:none}
+.cred-item{border-bottom:1px solid oklch(80% 0.06 195/.2)}
+.cred-item:last-child{border:none}
+.hero{text-align:center}
+.hero-tag,.hero-cta{justify-content:center}
+.hero-mono,.testi-mono{display:none}
+.hero-cta .btn{width:100%;justify-content:center}
+.hero-fig{margin-top:2rem;aspect-ratio:1/1;border-radius:var(--r-lg)}
+.hero-seal{left:50%;transform:translateX(-50%);bottom:-30px}
+.about,.sec-head,.steps .step,.ctab,.about-grid{text-align:center}
+.about .hero-tag{justify-content:center}
+.sec-head{margin-left:auto;margin-right:auto}
+.lead{margin-left:auto;margin-right:auto}
+.step::before{margin-left:auto;margin-right:auto}
+.diff-list li{flex-direction:column;align-items:center;text-align:center;gap:.5rem}
+.foot-grid{grid-template-columns:1fr;text-align:center}
+.foot-bar{justify-content:center;text-align:center}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+<div class="wrap nav-in">
+<a href="#hero" class="nav-logo"><img src="https://analeaoblos.my.canva.site/_assets/images/725b756a69a7d4c235070e51acd85560.png" alt="Dra. Patrícia Blos">Patrícia Blos</a>
+<div class="nav-links">
+<a href="#sobre">Sobre</a>
+<a href="#servicos">Serviços</a>
+<a href="#galeria">Ambiente</a>
+<a href="#faq">Dúvidas</a>
+<a class="btn btn-primary nav-cta" href="https://wa.me/558391468082">Agendar</a>
+</div>
+<button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+</div>
+<div class="mobile-menu" id="mmenu">
+<a href="#sobre">Sobre</a>
+<a href="#servicos">Serviços</a>
+<a href="#galeria">Ambiente</a>
+<a href="#faq">Dúvidas</a>
+<a href="#contato">Contato</a>
+<a href="https://wa.me/558391468082">Agendar pelo WhatsApp</a>
+</div>
+</nav>
+
+<header class="hero sec" id="hero">
+<div class="hero-mono">pb</div>
+<div class="wrap hero-grid">
+<div class="hero-txt">
+<span class="hero-tag label">2026 · Odontopediatria</span>
+<h1>Cuidado que une <em class="it">precisão</em> e acolhimento.</h1>
+<p class="lead">Odontopediatria especializada em laserterapia e frenectomia. Um atendimento delicado, técnico e seguro, pensado para que cada criança se sinta tranquila do início ao fim.</p>
+<div class="hero-cta">
+<a class="btn btn-primary" href="https://wa.me/558391468082">Agendar avaliação</a>
+<a class="btn btn-ghost" href="#servicos">Conhecer serviços</a>
+</div>
+</div>
+<div class="hero-fig">
+<img src="assets/ai-4.jpg" alt="Consultório de odontopediatria moderno e acolhedor">
+<div class="hero-seal">
+<svg class="seal" viewBox="0 0 118 118">
+<circle cx="59" cy="59" r="57" fill="none" stroke="oklch(46% 0.09 200)" stroke-width="1"/>
+<circle cx="59" cy="59" r="50" fill="oklch(98.2% 0.012 190)" stroke="oklch(78% 0.07 85)" stroke-width=".8"/>
+<path id="sc" d="M59 18 a41 41 0 1 1 -.1 0" fill="none"/>
+<text font-size="7.2" letter-spacing="3.2" fill="oklch(46% 0.09 200)"><textPath href="#sc" startOffset="6%">ODONTOPEDIATRIA · LASER · FRENECTOMIA ·</textPath></text>
+<text x="59" y="64" text-anchor="middle" font-size="30" font-style="italic" fill="oklch(46% 0.09 200)">PB</text>
+<text x="59" y="78" text-anchor="middle" font-size="5.5" letter-spacing="2" fill="oklch(78% 0.07 85)" font-family="Hanken Grotesk">CRO 10201</text>
+</svg>
+</div>
+</div>
+</div>
+</header>
+
+<section class="cred">
+<div class="wrap cred-in">
+<div class="cred-item reveal"><div class="num">10201</div><div class="cap">CRO-PB Registrado</div></div>
+<div class="cred-item reveal"><div class="num">3</div><div class="cap">Especialidades de alta complexidade</div></div>
+<div class="cred-item reveal"><div class="num">100%</div><div class="cap">Foco no conforto da criança</div></div>
+</div>
+</section>
+
+<section class="sec" id="sobre">
+<div class="wrap about-grid">
+<div class="about-fig reveal">
+<span class="about-num">01</span>
+<img src="https://analeaoblos.my.canva.site/cart-o-dra-patr-cia/_assets/media/577d5fd41659ae4ed79b57fe53bdf114.jpg" alt="Dra. Patrícia Blos" loading="lazy">
+</div>
+<div class="about reveal">
+<span class="hero-tag label">A profissional</span>
+<h2>Dra. <em class="it">Patrícia Blos</em></h2>
+<p>Cirurgiã dentista (CRO 10201-PB) dedicada à odontopediatria, com formação em laserterapia e frenectomia. Une rigor técnico a um olhar verdadeiramente delicado para a infância.</p>
+<p>Sua filosofia é simples: transformar a consulta em uma experiência positiva. Quando a criança se sente segura, o tratamento flui, e a relação com a saúde bucal nasce sem medo.</p>
+<p class="sig">Acolher para cuidar bem.</p>
+</div>
+</div>
+</section>
+
+<section class="sec" id="servicos">
+<div class="wrap">
+<div class="sec-head">
+<span class="label">Especialidades</span>
+<h2>Procedimentos com técnica e segurança</h2>
+<p class="lead">Cada tratamento é conduzido com equipamentos modernos e protocolos que reduzem dor, ansiedade e tempo de recuperação.</p>
+</div>
+<div class="serv-grid">
+<div class="card reveal">
+<div class="card-img"><img src="assets/ai-2.jpg" alt="Odontopediatria" loading="lazy"></div>
+<div class="card-body">
+<span class="n">01</span>
+<h3>Odontopediatria</h3>
+<p>Limpeza, prevenção, tratamento de cárie e acompanhamento do desenvolvimento bucal infantil, sempre com leveza.</p>
+</div>
+</div>
+<div class="card reveal">
+<div class="card-img"><img src="assets/ai-3.jpg" alt="Laserterapia" loading="lazy"></div>
+<div class="card-body">
+<span class="n">02</span>
+<h3>Laserterapia</h3>
+<p>Tecnologia a laser para procedimentos mais precisos e confortáveis, com menos dor e cicatrização acelerada.</p>
+</div>
+</div>
+<div class="card reveal">
+<div class="card-img"><img src="assets/ai-5.jpg" alt="Frenectomia" loading="lazy"></div>
+<div class="card-body">
+<span class="n">03</span>
+<h3>Frenectomia</h3>
+<p>Correção da língua presa e do frênulo labial, indicada quando há impacto na amamentação, fala ou desenvolvimento.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="sec steps">
+<div class="wrap">
+<div class="sec-head">
+<span class="label">Como funciona</span>
+<h2>Um caminho tranquilo, do primeiro contato ao retorno</h2>
+</div>
+<div class="steps-grid">
+<div class="step reveal"><div class="sn">01</div><h3>Acolhimento</h3><p>Recebemos pais e criança com calma, apresentando o ambiente e respondendo dúvidas.</p></div>
+<div class="step reveal"><div class="sn">02</div><h3>Avaliação</h3><p>Exame cuidadoso e plano de tratamento claro, explicado em linguagem simples.</p></div>
+<div class="step reveal"><div class="sn">03</div><h3>Tratamento</h3><p>Procedimento conduzido com tecnologia a laser e técnica que minimizam o desconforto.</p></div>
+<div class="step reveal"><div class="sn">04</div><h3>Acompanhamento</h3><p>Retornos e orientações para garantir a recuperação e a saúde a longo prazo.</p></div>
+</div>
+</div>
+</section>
+
+<section class="sec">
+<div class="wrap diff-grid">
+<div class="diff-fig reveal">
+<img src="assets/ai-1.jpg" alt="Sala de espera acolhedora para crianças" loading="lazy">
+</div>
+<div class="reveal">
+<span class="hero-tag label">Por que escolher</span>
+<h2 style="font-size:clamp(2rem,4.4vw,3.2rem);margin:1rem 0 1.6rem">Diferenciais que tranquilizam</h2>
+<ul class="diff-list">
+<li><span class="dn">a</span><div><h3>Laser de última geração</h3><p>Procedimentos mais rápidos, precisos e com menos sangramento.</p></div></li>
+<li><span class="dn">b</span><div><h3>Ambiente pensado para crianças</h3><p>Espaço lúdico e confortável que reduz o medo do dentista.</p></div></li>
+<li><span class="dn">c</span><div><h3>Atendimento humanizado</h3><p>Comunicação clara com os pais e paciência com cada criança.</p></div></li>
+<li><span class="dn">d</span><div><h3>Menos dor e ansiedade</h3><p>Técnicas modernas que tornam a experiência mais leve.</p></div></li>
+</ul>
+</div>
+</div>
+</section>
+
+<section class="sec" id="galeria">
+<div class="wrap">
+<div class="sec-head">
+<span class="label">O ambiente</span>
+<h2>Um espaço claro, seguro e acolhedor</h2>
+</div>
+<div class="gal-grid">
+<div class="gal-item big reveal"><img src="assets/ai-9.jpg" alt="Consultório pediátrico" loading="lazy"></div>
+<div class="gal-item reveal"><img src="assets/ai-8.jpg" alt="Equipamento a laser" loading="lazy"></div>
+<div class="gal-item reveal"><img src="assets/ai-6.jpg" alt="Sala de esterilização" loading="lazy"></div>
+<div class="gal-item reveal"><img src="https://analeaoblos.my.canva.site/cart-o-dra-patr-cia/_assets/media/94e4f4106ad56337f51cb28a0ca56890.jpg" alt="Atendimento" loading="lazy"></div>
+<div class="gal-item reveal"><img src="assets/ai-7.jpg" alt="Recepção amigável" loading="lazy"></div>
+<div class="gal-item reveal"><img src="https://analeaoblos.my.canva.site/cart-o-dra-patr-cia/_assets/media/cedc18146914ae94cc02bdb1a0a65d0a.jpg" alt="Detalhe do consultório" loading="lazy"></div>
+</div>
+</div>
+</section>
+
+<section class="sec testi">
+<div class="testi-mono">”</div>
+<div class="wrap">
+<div class="sec-head">
+<span class="label">Famílias atendidas</span>
+<h2 style="color:var(--white-tint);font-size:clamp(2rem,4.4vw,3.2rem)">O que os pais dizem</h2>
+</div>
+<div class="testi-grid">
+<div class="tcard reveal"><span class="q">“</span><p>Minha filha tinha pavor de dentista. A Dra. Patrícia teve uma paciência incrível, e ela saiu de lá sorrindo. Voltamos sem choro.</p><div class="who">Camila R.</div><div class="ctx">mãe da Helena, 5 anos</div></div>
+<div class="tcard reveal"><span class="q">“</span><p>Fizemos a frenectomia com laser no nosso filho. Tudo muito explicado, rápido e tranquilo. A recuperação foi melhor do que esperávamos.</p><div class="who">Rodrigo M.</div><div class="ctx">pai do Théo, 1 ano</div></div>
+<div class="tcard reveal"><span class="q">“</span><p>Profissional extremamente cuidadosa e atualizada. Senti segurança em cada etapa e o ambiente é pensado de verdade para as crianças.</p><div class="who">Juliana S.</div><div class="ctx">mãe do Pedro, 7 anos</div></div>
+</div>
+</div>
+</section>
+
+<section class="sec" id="faq">
+<div class="wrap">
+<div class="sec-head" style="text-align:center;margin-left:auto;margin-right:auto">
+<span class="label">Dúvidas frequentes</span>
+<h2>Antes da consulta, sem receio</h2>
+</div>
+<div class="faq-wrap">
+<div class="faq-item"><button class="faq-q">Qual é a idade mínima para a primeira consulta?<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button><div class="faq-a"><p>A recomendação é levar a criança já no primeiro ano de vida ou assim que nascer o primeiro dentinho. Quanto antes, mais natural se torna a relação com o dentista.</p></div></div>
+<div class="faq-item"><button class="faq-q">A laserterapia dói?<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button><div class="faq-a"><p>O laser é justamente uma técnica que reduz o desconforto. Na maioria dos casos é praticamente indolor, com menos sangramento e recuperação mais rápida.</p></div></div>
+<div class="faq-item"><button class="faq-q">Quanto tempo dura uma frenectomia?<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button><div class="faq-a"><p>O procedimento com laser costuma ser breve, geralmente concluído em poucos minutos, dentro de uma consulta tranquila e acompanhada.</p></div></div>
+<div class="faq-item"><button class="faq-q">Precisa de anestesia?<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button><div class="faq-a"><p>Depende do procedimento e da idade. Quando necessário, usamos anestesia local, sempre de forma cuidadosa e explicada à criança e aos pais.</p></div></div>
+<div class="faq-item"><button class="faq-q">Como funciona o valor das consultas?<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button><div class="faq-a"><p>O valor varia conforme a avaliação e o tratamento indicado. Entre em contato pelo WhatsApp para receber as informações detalhadas.</p></div></div>
+<div class="faq-item"><button class="faq-q">Atende por convênio?<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button><div class="faq-a"><p>Fale conosco pelo WhatsApp para confirmar as condições e formas de atendimento disponíveis para o seu caso.</p></div></div>
+</div>
+</div>
+</section>
+
+<section class="sec ctab">
+<div class="wrap">
+<h2>Marque a <em class="it">avaliação</em> hoje</h2>
+<p>Dê o primeiro passo para um cuidado bucal infantil acolhedor e técnico. Estamos prontas para receber a sua família.</p>
+<a class="btn btn-primary" href="https://wa.me/558391468082">Falar no WhatsApp</a>
+</div>
+</section>
+
+<section class="sec" id="contato">
+<div class="wrap contact-grid">
+<div class="contact-info">
+<div class="sec-head" style="margin-bottom:1.5rem">
+<span class="label">Contato</span>
+<h2 style="font-size:clamp(1.8rem,4vw,2.6rem)">Vamos conversar</h2>
+</div>
+<div class="row"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg><div><div class="k">WhatsApp / Telefone</div><a class="v" href="https://wa.me/558391468082">+55 83 9146-8082</a></div></div>
+<div class="row"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><div><div class="k">Horário</div><div class="v">Segunda a sexta, 8h às 18h</div></div></div>
+<div class="row"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><div><div class="k">Atendimento</div><div class="v">Paraíba (PB)</div></div></div>
+<a class="btn btn-primary" style="margin-top:1.6rem" href="https://wa.me/558391468082">Agendar avaliação</a>
+</div>
+<div class="map-frame reveal">
+<iframe src="https://www.google.com/maps?q=Paraiba,Brasil&output=embed" loading="lazy" title="Localização"></iframe>
+</div>
+</div>
+</section>
+
+<footer>
+<div class="wrap foot-grid">
+<div>
+<div class="foot-brand">Dra. Patrícia <span>Blos</span></div>
+<p>Odontopediatria especializada em laserterapia e frenectomia. Cuidado delicado, técnico e seguro para a saúde bucal infantil.</p>
+</div>
+<div class="foot-col">
+<h4>Navegação</h4>
+<a href="#sobre">Sobre</a>
+<a href="#servicos">Serviços</a>
+<a href="#galeria">Ambiente</a>
+<a href="#faq">Dúvidas</a>
+<a href="#contato">Contato</a>
+</div>
+<div class="foot-col">
+<h4>Contato</h4>
+<a href="https://wa.me/558391468082">+55 83 9146-8082</a>
+<a>Seg a sex · 8h às 18h</a>
+<a>Paraíba, Brasil</a>
+<a>CRO 10201-PB</a>
+</div>
+</div>
+<div class="wrap foot-bar">
+<span>© 2026 Dra. Patrícia Blos · Todos os direitos reservados</span>
+<span style="font-family:'Fraunces',serif;font-style:italic;color:var(--brand)">PB</span>
+</div>
+</footer>
+
+<script>
+const burger=document.getElementById('burger'),mmenu=document.getElementById('mmenu');
+burger.addEventListener('click',()=>mmenu.classList.toggle('show'));
+mmenu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>mmenu.classList.remove('show')));
+const nav=document.getElementById('nav');
+addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>20));
+document.querySelectorAll('.faq-item').forEach(it=>{
+const q=it.querySelector('.faq-q'),a=it.querySelector('.faq-a');
+q.addEventListener('click',()=>{
+const open=it.classList.contains('open');
+document.querySelectorAll('.faq-item').forEach(o=>{o.classList.remove('open');o.querySelector('.faq-a').style.maxHeight=null});
+if(!open){it.classList.add('open');a.style.maxHeight=a.scrollHeight+'px'}
+});
+});
+window.addEventListener('load',()=>{
+if(!window.gsap)return;
+gsap.registerPlugin(ScrollTrigger);
+const r=gsap.utils.toArray('.reveal');
+gsap.set(r,{opacity:0,y:20});
+ScrollTrigger.batch(r,{once:true,start:"top 86%",onEnter:b=>gsap.to(b,{opacity:1,y:0,duration:.7,stagger:.08,ease:"power3.out"})});
+gsap.from('.hero-txt > *',{opacity:0,y:24,duration:.8,stagger:.1,ease:"power3.out"});
+gsap.from('.hero-fig',{opacity:0,scale:.96,duration:1,ease:"power3.out",delay:.2});
+document.fonts.ready.then(()=>ScrollTrigger.refresh());
+ScrollTrigger.refresh();
+});
+</script>
+</body>
+</html>
